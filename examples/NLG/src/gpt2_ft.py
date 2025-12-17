@@ -233,13 +233,13 @@ def train_validate(
             w_alpha =  torch.nn.functional.softmax(- args.renyi_alpha * loss, dim = 0).detach()
             loss = loss * w_alpha
 
-        if lm_mask is None:
-            lm_mask = torch.ones(loss.shape, dtype=loss.dtype, device=loss.device)
-        loss = loss * lm_mask 
+        if _msk is None:
+            _msk = torch.ones(loss.shape, dtype=loss.dtype, device=loss.device)
+        loss = loss * _msk 
 
-        loss = loss.sum() / (lm_mask.sum() + 0.0001)
+        loss = loss.sum() / (_msk.sum() + 0.0001)
 
-        _lm_loss = _lm_loss.mean() * args.lora_particles
+        _lm_loss = loss.mean() * args.lora_particles
 
         train_step += 1
         is_update = True if train_step % args.grad_acc == 0 else False

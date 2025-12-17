@@ -158,11 +158,11 @@ def evaluate(model, valid_loader, args):
 
             _input = data['input'].to(args.device)
             seq_len = _input.shape[-1]
-            _input = _input.unsqueeze(0).expand(args.lora_particles, -1, -1).view(-1, seq_len)
+            _input = _input.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, seq_len)
             _target = data['target'].to(args.device)
-            _target = _target.unsqueeze(0).expand(args.lora_particles, -1, -1).view(-1, seq_len)
+            _target = _target.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, seq_len)
             _msk = data['mask'].to(args.device)
-            _msk = _msk.unsqueeze(0).expand(args.lora_particles, -1, -1).view(-1, seq_len)
+            _msk = _msk.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, seq_len)
 
             # _lm_logits, _loss = model(_input, lm_labels=_target, lm_mask=_msk) 
             _, _loss = model(_input, lm_labels=_target, lm_mask=_msk) 
@@ -202,11 +202,11 @@ def train_validate(
         _input = data['input'].to(args.device)
         _len = _input.shape[-1]
         _initial_batch = _input.shape[0]
-        _input = _input.unsqueeze(0).expand(args.lora_particles, -1, -1).view(-1, _len)
+        _input = _input.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, _len)
         _batch = _input.shape[0]
 
         _target = data['target'].to(args.device)
-        _target = _target.unsqueeze(0).expand(args.lora_particles, -1, -1).view(-1, _len)
+        _target = _target.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, _len)
         _msk = data['mask'].to(args.device)
         _msk = _msk.unsqueeze(0).expand(args.lora_particles, -1, -1) #   .view(-1, _len)
 

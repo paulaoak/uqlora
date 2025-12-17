@@ -77,6 +77,8 @@ parser.add_argument('--lora_particles', type=int, default=8, help='number of lor
 
 parser.add_argument('--lora_alpha', type=int, default=128, help='lora attn alpha')
 
+parser.add_argument('--renyi_alpha', type=float, default=0.9, help='order of renyi entropy')
+
 parser.add_argument('--obj', default='clm', choices=['jlm', 'clm'], 
                     help='language model training objective')
 

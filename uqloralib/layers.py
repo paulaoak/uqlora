@@ -177,7 +177,7 @@ class BatchedMergedLinear(nn.Module):
         delta_w = delta_w_reshaped.reshape(self.M, self.G * self.block, self.in_features)
         
         # Apply ΔW in one GEMM        
-        delta_out = torch.einsum("mbtd,mod->mbto", x_d, T(delta_w))
+        delta_out = torch.einsum("mbtd,mod->mbto", x_d, delta_w)
         base[:, :, :, self.lora_out_indices] += self.scaling * delta_out
 
-        return base.reshape(-1, *x.shape[2:])
+        return base.reshape(-1, *base.shape[2:])

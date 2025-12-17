@@ -17,17 +17,9 @@ import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.utils.data
 
-import numpy
-import io
-import sys
-import threading
-import math
 import random
 
 import json
-import collections
-from collections import Counter
-from collections import OrderedDict
 from progress.bar import Bar as Bar
 
 

@@ -158,7 +158,7 @@ class BatchedMergedLinear(nn.Module):
             return w.T if self.fan_in_fan_out else w
 
         # Base output
-        base = torch.einsum("mbytd,od->mbto", x, T(self.weight))
+        base = torch.einsum("mbtd,od->mbto", x, T(self.weight))
         if self.bias is not None:
             base = base + self.bias.view(1, 1, -1)
 

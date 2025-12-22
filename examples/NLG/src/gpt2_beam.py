@@ -216,8 +216,12 @@ def beam(model, data_iter, args):
             data = {key: value for key, value in data.items()}
 
             _id = data['id'].to(args.device)
+            seq_len = _id.shape[-1]
+            _id = _id.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, seq_len)
             _query = data['query'].to(args.device)
+            _query = _query.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, seq_len)
             _query_len = data['query_len'].to(args.device)
+            _query_len = _query_len.unsqueeze(0).expand(args.lora_particles, -1, -1).reshape(-1, seq_len)
 
             ## local adaptation start.
 
